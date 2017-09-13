@@ -20,9 +20,9 @@
 * open http://localhost:9100/
 
 修改elasticsearch安装目录下的config/elasticsearch.yml文件，在末尾加入以下两行解决跨域请求问题
-    
-    http.cors.enabled: true
-    http.cors.allow-origin: "*"
+
+	http.cors.enabled: true
+	http.cors.allow-origin: "*"
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/head.png)
 
