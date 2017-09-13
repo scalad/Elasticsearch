@@ -9,22 +9,6 @@
 * elasticsearch.bat
 * curl http://localhost:9200/
 
-```JavaScript
-    {
-      "name" : "DGbaZ0U",
-      "cluster_name" : "elasticsearch",
-      "cluster_uuid" : "C2Lv4yU_T7SCH05fLgAlJQ",
-      "version" : {
-        "number" : "5.6.0",
-        "build_hash" : "781a835",
-        "build_date" : "2017-09-07T03:09:58.087Z",
-        "build_snapshot" : false,
-        "lucene_version" : "6.6.0"
-      },
-      "tagline" : "You Know, for Search"
-    }
-```
-
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/elasticsearch.png)
 
 ### elasticsearch head 插件 ###
@@ -34,6 +18,11 @@
 * npm install
 * npm run start
 * open http://localhost:9100/
+
+修改elasticsearch安装目录下的config/elasticsearch.yml文件，在末尾加入以下两行解决跨域请求问题
+    
+    http.cors.enabled: true
+    http.cors.allow-origin: "*"
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/head.png)
 
