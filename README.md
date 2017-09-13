@@ -9,6 +9,7 @@
 * elasticsearch.bat
 * curl http://localhost:9200/
 
+```JavaScript
     {
       "name" : "DGbaZ0U",
       "cluster_name" : "elasticsearch",
@@ -22,6 +23,8 @@
       },
       "tagline" : "You Know, for Search"
     }
+```
+
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/elasticsearch.png)
 
 ### elasticsearch head 插件 ###
