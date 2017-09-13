@@ -34,6 +34,7 @@
 * npm install
 * npm run start
 * open http://localhost:9100/
+
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/head.png)
 
 ### elasticsearch hq插件 ###
