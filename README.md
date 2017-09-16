@@ -2,6 +2,7 @@
 
 ### Required ###
 * JDK1.8+
+* [关于ElasticSearch](https://github.com/scalad/Elasticsearch/blob/master/doc/)
 
 ### elasticsearch 单机安装 ###
 * 官网[下载](https://www.elastic.co/downloads/elasticsearch)
@@ -134,3 +135,5 @@ es5.6-5`elasticsearch.yml`配置文件
 ### Marvel插件 ###
 Marvel是Elasticsearch的管理和监控工具，对于开发使用免费的。它配备了一个叫做Sense的交互式控制台，方便通过浏览器直接与Elasticsearch交互。
 
+### Bigdesk插件 ###
+bigdesk是elasticsearch的一个集群监控工具，可以通过它来查看es集群的各种状态，如：cpu、内存使用情况，索引数据、搜索情况，http连接数等。项目git地址： [https://github.com/lukas-vlcek/bigdesk](https://github.com/lukas-vlcek/bigdesk)。和head一样，它也是个独立的网页程序，使用方式和head一样。不过可惜的是它支持的版本教老，也已经不更新了。
