@@ -1,5 +1,8 @@
 # 基于elasticsearch5.6集群 #
 
+### Required ###
+* JDK1.8+
+
 ### elasticsearch 单机安装 ###
 * 官网[下载](https://www.elastic.co/downloads/elasticsearch)
 * curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.0.zip
@@ -10,6 +13,15 @@
 * curl http://localhost:9200/
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/elasticsearch.png)
+
+### 安装NodeJS ###
+ElasticSearch5之前的版本安装Head插件只需要在`bin`目录下执行`./plugin -install mobz/elasticsearch-head`就可以完成安装，5之后改用Node安装运行，所以你需要先安装NodeJS,下面是Window环境：
+
+* [下载你NodeJS](https://nodejs.org/en/)
+* 或者 `wget https://nodejs.org/dist/v6.11.3/node-v6.11.3-x64.msi`
+* 执行安装程序
+* 安装完NodeJS后默认已经安装了npm，NodeJS包管理和分发工具
+
 
 ### elasticsearch head 插件 ###
 * 项目地址[elasticsearch-head](https://github.com/mobz/elasticsearch-head)
@@ -32,6 +44,8 @@
 * cp -r es5.6-1 es5.6-3
 * cp -r es5.6-1 es5.6-4
 * cp -r es5.6-1 es5.6-5
+
+> 要是部署的时候从一个节点复制elasticsearch文件夹，其他节点可能包含被复制节点的data文件数据，需要把data文件下的文件清空
 
 es5.6-1`elasticsearch.yml`配置文件
 
@@ -116,3 +130,7 @@ es5.6-5`elasticsearch.yml`配置文件
 
 ### elasticsearch hq插件 ###
 * 项目地址[elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ)
+
+### Marvel插件 ###
+Marvel是Elasticsearch的管理和监控工具，对于开发使用免费的。它配备了一个叫做Sense的交互式控制台，方便通过浏览器直接与Elasticsearch交互。
+
