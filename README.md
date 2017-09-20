@@ -130,7 +130,7 @@ es5.6-5`elasticsearch.yml`配置文件
  
 
 ### elasticsearch hq插件 ###
-* 项目地址[elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ)
+Elastic HQ提供一个Web应用程序来管理和监控ElasticSearch实例与集群管理和监控。具有良好体验、直观和功能强大的 ElasticSearch 的管理和监控工具。提供实时监控、全集群管理、搜索和查询，项目地址[elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ)
 
 ### Marvel插件 ###
 Marvel是Elasticsearch的管理和监控工具，对于开发使用免费的。它配备了一个叫做Sense的交互式控制台，方便通过浏览器直接与Elasticsearch交互。
