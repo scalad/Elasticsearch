@@ -140,3 +140,4 @@ bigdesk是elasticsearch的一个集群监控工具，可以通过它来查看es�
 ### About ###
 * [关于ElasticSearch](https://github.com/scalad/Elasticsearch/blob/master/doc/aboutElasticSearch)
 * [关于多个ElasticSearch集群的数据一致性](https://github.com/scalad/Elasticsearch/blob/master/doc/ClusterDataAccordance)
+* [关于Elasticdump导出ElasticSearch索引数据](https://github.com/scalad/Elasticsearch/blob/master/doc/Elasticdump)
