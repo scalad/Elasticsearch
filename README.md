@@ -126,7 +126,21 @@ es5.6-5`elasticsearch.yml`配置文件
 * 创建个索引，2个副本
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/cluster.png)
- 
+
+### Elasticsearch-analysis-ik 中文分词器 ###
+[elasticsearch-analysis-ik](https://github.com/medcl/elasticsearch-analysis-ik)
+把Lucene的[IK analyzer](http://code.google.com/p/ik-analyzer/)中文分词器集成进了ElasticSearch，支持自定义的目录
+
+#### 安装 ####
+1.根据你的elasticsearch的版本在[这里](https://github.com/medcl/elasticsearch-analysis-ik/releases)下载相应版本的Elasticsearch-analysis-ik，注意版本要对应，否则安装不上，解压到你elasticsearch文件下下的/plugins/文件夹下
+> 如果的elasticsearch版本大于5.5.1，则可以使用下面的命令安装，但是版本也要对应上
+> ./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.6.2/elasticsearch-analysis-ik-5.6.2.zip
+
+2.重启你的Elasticsearch
+
+关于ElasticSearch热更新IK分词请参考[热更新 IK 分词使用方法](https://github.com/medcl/elasticsearch-analysis-ik)
+
+
 
 ### elasticsearch hq插件 ###
 Elastic HQ提供一个Web应用程序来管理和监控ElasticSearch实例与集群管理和监控。具有良好体验、直观和功能强大的 ElasticSearch 的管理和监控工具。提供实时监控、全集群管理、搜索和查询，项目地址[elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ)
@@ -141,3 +155,4 @@ bigdesk是elasticsearch的一个集群监控工具，可以通过它来查看es�
 * [关于ElasticSearch](https://github.com/scalad/Elasticsearch/blob/master/doc/aboutElasticSearch)
 * [关于多个ElasticSearch集群的数据一致性](https://github.com/scalad/Elasticsearch/blob/master/doc/ClusterDataAccordance)
 * [关于Elasticdump导出ElasticSearch索引数据](https://github.com/scalad/Elasticsearch/blob/master/doc/Elasticdump)
+* [关于使用sql语句查询ElasticSearch](https://github.com/NLPchina/elasticsearch-sql)
