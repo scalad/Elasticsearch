@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.silence.elasticsearch</groupId>
-	<artifactId>Elasticsearch</artifactId>
+	<artifactId>ElasticSearch</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Elasticsearch Maven Webapp</name>
-	<url>http://maven.apache.org</url>
-	<properties>
+	<name>ElasticSearch Maven Webapp</name>
+  	<url>http://maven.apache.org</url>
+ 	<properties>
 		<log4j.version>2.8.2</log4j.version>
 		<fastjson.version>1.2.38</fastjson.version>
 	</properties>
@@ -19,10 +19,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.elasticsearch</groupId>
-			<artifactId>elasticsearch</artifactId>
-			<version>5.6.0</version>
-		</dependency>
+		    <groupId>org.elasticsearch.client</groupId>
+		    <artifactId>transport</artifactId>
+		    <version>5.6.0</version>
+			</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -42,5 +42,23 @@
 	</dependencies>
 	<build>
 		<finalName>Elasticsearch</finalName>
+		<plugins>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-shade-plugin</artifactId>
+			    <version>2.4.1</version>
+			    <executions>
+			        <execution>
+			            <phase>package</phase>
+			            <goals><goal>shade</goal></goals>
+			            <configuration>
+			                <transformers>
+			                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+			                </transformers>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>
