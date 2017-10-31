@@ -60,6 +60,8 @@ es5.6-1`elasticsearch.yml`配置文件
 	discovery.zen.ping.unicast.hosts: ["172.28.3.34:9300"]
 	http.cors.enabled: true
 	http.cors.allow-origin: "*"
+	http.cors.allow-credentials: true
+	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
 es5.6-2`elasticsearch.yml`配置文件
 
@@ -74,6 +76,8 @@ es5.6-2`elasticsearch.yml`配置文件
 	discovery.zen.ping.unicast.hosts: ["172.28.3.34:9300"]
 	http.cors.enabled: true
 	http.cors.allow-origin: "*"
+	http.cors.allow-credentials: true
+	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
 es5.6-3`elasticsearch.yml`配置文件
 
@@ -88,6 +92,8 @@ es5.6-3`elasticsearch.yml`配置文件
 	discovery.zen.ping.unicast.hosts: ["172.28.3.34:9300"]
 	http.cors.enabled: true
 	http.cors.allow-origin: "*"
+	http.cors.allow-credentials: true
+	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
 es5.6-4`elasticsearch.yml`配置文件
 
@@ -102,6 +108,8 @@ es5.6-4`elasticsearch.yml`配置文件
 	discovery.zen.ping.unicast.hosts: ["172.28.3.34:9300"]
 	http.cors.enabled: true
 	http.cors.allow-origin: "*"
+	http.cors.allow-credentials: true
+	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
 es5.6-5`elasticsearch.yml`配置文件
 
@@ -116,6 +124,8 @@ es5.6-5`elasticsearch.yml`配置文件
 	discovery.zen.ping.unicast.hosts: ["172.28.3.34:9300"]
 	http.cors.enabled: true
 	http.cors.allow-origin: "*"
+	http.cors.allow-credentials: true
+	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
 * ./es5.6-1/bin/elasticsearch.bat
 * ./es5.6-2/bin/elasticsearch.bat
