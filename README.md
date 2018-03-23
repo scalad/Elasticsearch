@@ -1,14 +1,14 @@
-# 基于elasticsearch5.6集群 #
+﻿# 基于elasticsearch6.2.2集群 #
 
 ### Required ###
 * JDK1.8+
 
 ### elasticsearch 单机安装 ###
-* 官网[下载](https://www.elastic.co/downloads/elasticsearch)
-* curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.0.zip
-* tar -zxvf elasticsearch-5.6.0.zip -C d:/
-* mv elasticsearch-5.6.0 es5.6
-* cd es5.6/bin
+* 官网[下载](https://www.elastic.co/downloads/elasticsearch)或者到[github下载](https://github.com/elastic/elasticsearch)或者使用下面命令下载安装
+* curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.2.zip
+* tar -zxvf elasticsearch-6.2.2.zip -C d:/
+* mv elasticsearch-6.2.2.zip es6.2.2
+* cd es6.2.2/bin
 * elasticsearch.bat
 * curl http://localhost:9200/
 
@@ -31,23 +31,23 @@ ElasticSearch5之前的版本安装Head插件只需要在`bin`目录下执行`./
 * npm run start
 * open http://localhost:9100/
 
-修改elasticsearch安装目录下的config/elasticsearch.yml文件，在末尾加入以下两行解决跨域请求问题
+修改elasticsearch安装目录下的config/elasticsearch.yml文件，在末尾加入以下几行解决跨域请求问题
 
 	http.cors.enabled: true
-	http.cors.allow-origin: "*"
+    http.cors.allow-origin: "*"
+    http.cors.allow-credentials: true
+    http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/head.png)
 
 ### elasticsearch 集群安装 ###
-* mv es5.6 es5.6-1
-* cp -r es5.6-1 es5.6-2
-* cp -r es5.6-1 es5.6-3
-* cp -r es5.6-1 es5.6-4
-* cp -r es5.6-1 es5.6-5
+* mv es6.2.2 es6.2.2-1
+* cp -r es6.2.2-1 es6.2.2-2
+* cp -r es6.2.2-1 es6.2.2-3
 
 > 要是部署的时候从一个节点复制elasticsearch文件夹，其他节点可能包含被复制节点的data文件数据，需要把data文件下的文件清空
 
-es5.6-1`elasticsearch.yml`配置文件
+es6.2.2-1`elasticsearch.yml`配置文件
 
 	cluster.name: elasticsearch
 	node.master: true
@@ -63,7 +63,7 @@ es5.6-1`elasticsearch.yml`配置文件
 	http.cors.allow-credentials: true
 	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
-es5.6-2`elasticsearch.yml`配置文件
+es6.2.2-2`elasticsearch.yml`配置文件
 
 	cluster.name: elasticsearch
 	node.master: false
@@ -79,7 +79,7 @@ es5.6-2`elasticsearch.yml`配置文件
 	http.cors.allow-credentials: true
 	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
-es5.6-3`elasticsearch.yml`配置文件
+es6.2.2-3`elasticsearch.yml`配置文件
 
 	cluster.name: elasticsearch
 	node.master: false
@@ -95,43 +95,9 @@ es5.6-3`elasticsearch.yml`配置文件
 	http.cors.allow-credentials: true
 	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 
-es5.6-4`elasticsearch.yml`配置文件
-
-	cluster.name: elasticsearch
-	node.master: false
-	node.name: node-4
-	path.data: ./../data
-	path.logs: ./../logs
-	network.host: 172.28.3.34
-	http.port: 9203
-	transport.tcp.port: 9303
-	discovery.zen.ping.unicast.hosts: ["172.28.3.34:9300"]
-	http.cors.enabled: true
-	http.cors.allow-origin: "*"
-	http.cors.allow-credentials: true
-	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
-
-es5.6-5`elasticsearch.yml`配置文件
-
-	cluster.name: elasticsearch
-	node.master: false
-	node.name: node-5
-	path.data: ./../data
-	path.logs: ./../logs
-	network.host: 172.28.3.34
-	http.port: 9204
-	transport.tcp.port: 9304
-	discovery.zen.ping.unicast.hosts: ["172.28.3.34:9300"]
-	http.cors.enabled: true
-	http.cors.allow-origin: "*"
-	http.cors.allow-credentials: true
-	http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
-
-* ./es5.6-1/bin/elasticsearch.bat
-* ./es5.6-2/bin/elasticsearch.bat
-* ./es5.6-3/bin/elasticsearch.bat
-* ./es5.6-4/bin/elasticsearch.bat
-* ./es5.6-5/bin/elasticsearch.bat
+* ./es6.2.2-1/bin/elasticsearch.bat
+* ./es6.2.2-2/bin/elasticsearch.bat
+* ./es6.2.2-3/bin/elasticsearch.bat
 * http://172.28.3.34:9100
 * 创建个索引，2个副本
 
@@ -144,7 +110,7 @@ es5.6-5`elasticsearch.yml`配置文件
 #### 1、安装 ####
 1.根据你的elasticsearch的版本在[这里](https://github.com/medcl/elasticsearch-analysis-ik/releases)下载相应版本的Elasticsearch-analysis-ik，注意版本要对应，否则安装不上，解压到你elasticsearch文件下下的/plugins/文件夹下
 > 如果的elasticsearch版本大于5.5.1，则可以使用下面的命令安装，但是版本也要对应上
-> ./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.6.2/elasticsearch-analysis-ik-5.6.2.zip
+> ./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.2.2/elasticsearch-analysis-ik-6.2.2.zip
 
 #### 2、重启你的Elasticsearch ####
 
@@ -156,7 +122,7 @@ Kibana是一个开源的分析与可视化平台，设计出来用于和Elastics
 Kibana让我们理解大量数据变得很容易。它简单、基于浏览器的接口使你能快速创建和分享实时展现Elasticsearch查询变化的动态仪表盘。安装Kibana非常快，你可以在几分钟之内安装和开始探索你的Elasticsearch索引数据—-—-不需要写任何代码，没有其他基础软件依赖
 
 #### 1、下载 ####
-到[官网地址](https://www.elastic.co/downloads/kibana)下载跟你ElasticSearch对应的Kibana版本，按照文档的要求，一般Kiban的版本要和ElasticSearch一致，如我这里的ElasticSearch版本为5.6.0，则下载[https://artifacts.elastic.co/downloads/kibana/kibana-5.6.0-windows-x86.zip](https://artifacts.elastic.co/downloads/kibana/kibana-5.6.0-windows-x86.zip)
+到[官网地址](https://www.elastic.co/downloads/kibana)下载跟你ElasticSearch对应的Kibana版本，按照文档的要求，一般Kiban的版本要和ElasticSearch一致，如我这里的ElasticSearch版本为6.2.2，则下载[https://artifacts.elastic.co/downloads/kibana/kibana-6.2.2-windows-x86.zip](https://artifacts.elastic.co/downloads/kibana/kibana-6.2.2-windows-x86.zip)
 
 #### 2、配置启动 ####
 解压到你的目录下，到config/kibana.yml修改elasticsearch的url地址，你可以在里面配置端口，默认是5601,
@@ -171,8 +137,6 @@ Kibana让我们理解大量数据变得很容易。它简单、基于浏览器�
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/image/kibana.png)
 
 具体的使用请参考[官方文档](https://www.elastic.co/guide/en/kibana/current/getting-started.html)
-
-
 
 ### elasticsearch hq插件 ###
 Elastic HQ提供一个Web应用程序来管理和监控ElasticSearch实例与集群管理和监控。具有良好体验、直观和功能强大的 ElasticSearch 的管理和监控工具。提供实时监控、全集群管理、搜索和查询，项目地址[elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ)
