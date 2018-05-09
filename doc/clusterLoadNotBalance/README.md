@@ -3,9 +3,11 @@
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/clusterLoadNotBalance/images/error.png?raw=true)
 
-参考[https://blog.csdn.net/wwd0501/article/details/78399943](https://blog.csdn.net/wwd0501/article/details/78399943)也就是Elasticsearch在并发查询量大的情况下，访问流量超过了集群中单个Elasticsearch实例的处理能力，Elasticsearch服务端会触发保护性的机制，拒绝执行新的访问，并且抛出EsRejectedExecutionException异常
+参考[https://blog.csdn.net/wwd0501/article/details/78399943](https://blog.csdn.net/wwd0501/article/details/78399943)也就是Elasticsearch在并发查询量大的情况下，访问流量超过了集群中单个Elasticsearch实例的处理能力，Elasticsearch服务端会触发保护性的机制，拒绝执行新的访问，并且抛出EsRejectedExecutionException异常，通过观察ES集群发现了下面的几个问题:
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/clusterLoadNotBalance/images/balance.png?raw=true)
+
+[为什么会出现这个问题呢？](http://grokbase.com/t/gg/elasticsearch/14121arzf8/load-balancing-and-a-node-with-no-primary-shard)通过这里面的步骤可以很容易的复现出这个问题。
 
 #### (1)	primary shard主副分片分布不均 ####
 primary true代表的是主数据，检索的时候从该分片拿，false是备份的副本，是做容错时的冗余数据。短信告警也是从10.13.95.228主节点开始而后10.23.28.177、10.13.28.197和10.13.130.248这几台出现的。
@@ -15,4 +17,29 @@ primary true代表的是主数据，检索的时候从该分片拿，false是备
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/clusterLoadNotBalance/images/server1.png?raw=true)
 
 ![](https://github.com/scalad/Elasticsearch/blob/master/doc/clusterLoadNotBalance/images/server2.png?raw=true)
+
+#### (2)	master node既是master node又是data node ####
+master node既要做数据检索，也要做集群的负载均衡转发器，导致每个集群的master node的CPU都很高，因此每次告警首先都是master node
+
+### 解决方案 ###
+#### (1)	方案一：手动移动分片 ####
+![](https://github.com/scalad/Elasticsearch/blob/master/doc/clusterLoadNotBalance/images/move.png)
+
+例如移动node-1的分片0到node-4
+
+```shell
+curl -XPOST 'http://localhost:9200/_cluster/reroute' -d '{
+  "commands":[{
+  "move":{
+    "index":"indexName",
+    "shard":0,
+    "from_node":"node-1",
+    "to_node":"node-4"
+}}]}'
+```
+优点：操作简单，恢复时间短；不必修改master node的配置，master node长期负载后高
+
+缺点：索引大，移动时有很高的IO，索引容易损坏，需要做备份，不能解决master node既是数据节点又是负载均衡转发器的问题
+
+注意：分片和副本无法移动到同一个节点
 
