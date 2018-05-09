@@ -43,3 +43,10 @@ curl -XPOST 'http://localhost:9200/_cluster/reroute' -d '{
 
 注意：分片和副本无法移动到同一个节点
 
+#### (2)	方案三：重建索引，从另外一个集群导入 ####
+删除原来的索引，重新建立索引，；利用[elasticsearch dump](https://github.com/taskrabbit/elasticsearch-dump)等工具从另一个集群中把数据导入到新的索引中
+
+优点：可以重新配置master node和data node，主从负载均匀
+
+缺点：费时间，容易数据丢失，需要验证数据的一致性
+
