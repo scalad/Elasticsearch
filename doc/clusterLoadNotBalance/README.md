@@ -54,4 +54,22 @@ curl -XPOST 'http://localhost:9200/_cluster/reroute' -d '{
 
 经过讨论，我们选了趁着月黑风高，我们选择了第一个方案，因为第一个方案操作起来比较简单，有经过本地的测试，风险也比较小。
 
-[Too many shards on node for attribute: [rack], required per attribute: [1], node count: [2], leftover: [0]](https://stackoverflow.com/questions/44799045/too-many-shards-on-node-for-attribute-rack-required-per-attribute-1-node)
+然而理想很美好，现实确实很骨干，当天晚上一操作就出现了问题，载移动分片的过程中报了下面的错误：
+
+```json
+{
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "remote_transport_exception",
+        "reason" : "[node-2][host:9301][cluster:admin/reroute]"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[move_allocation] can't move 1, from {node-2}{i5VJB-iSS_KNQnlxMxSJfA}{tif3N5vtTRuM-Z63C4cW5A}{host}{host:9301}, to {node-1}{j8h-FRjISRikUC8l8FTkMQ}{RNOZ2orcS36HGNk5m1CF3w}{host}{host:9300}, since its not allowed, reason: [YES(shard has no previous failures)][YES(shard is primary and can be allocated)][YES(explicitly ignoring any disabling of allocation due to manual allocation commands via the reroute API)][YES(target node version [6.2.2] is the same or newer than source node version [6.2.2])][YES(no snapshots are currently running)][YES(ignored as shard is not being recovered from a snapshot)][YES(node passes include/exclude/require filters)][YES(the shard does not exist on the same node)][YES(enough disk for shard on node, free: [84.6gb], shard size: [267.6kb], free after allocating shard: [84.6gb])][YES(below shard recovery limit of outgoing: [0 < 2] incoming: [0 < 2])][NO(too many shards [1] allocated to this node for index [indexName], index setting [index.routing.allocation.total_shards_per_node=2])][YES(allocation awareness is not enabled, set cluster setting [cluster.routing.allocation.awareness.attributes] to enable it)]"
+  },
+  "status" : 400
+}
+```
+
+`NO(too many shards [1] allocated to this node for index [indexName], index setting [index.routing.allocation.total_shards_per_node=2]`意思是对于索引indexName，它的分片在该节点数量超过了它的配置index.routing.allocation.total_shards_per_node=2。在stackoverflow在发现了遇见了同样问题的人，可能是因为版本有点差异，所以异常信息可能有点不一样[Too many shards on node for attribute: [rack], required per attribute: [1], node count: [2], leftover: [0]](https://stackoverflow.com/questions/44799045/too-many-shards-on-node-for-attribute-rack-required-per-attribute-1-node)
