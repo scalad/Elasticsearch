@@ -102,3 +102,5 @@ curl -XPOST 'http://localhost:9200/_cluster/reroute' -d '{
 ```
 
 ok,移动完成后主副分片分布正常，用测试环境做压测，集群负载也均衡，没有发生主分片再移动现象，如下：
+
+![](https://github.com/scalad/Elasticsearch/blob/master/doc/clusterLoadNotBalance/images/has_balance.png)
