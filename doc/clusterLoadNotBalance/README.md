@@ -73,3 +73,32 @@ curl -XPOST 'http://localhost:9200/_cluster/reroute' -d '{
 ```
 
 `NO(too many shards [1] allocated to this node for index [indexName], index setting [index.routing.allocation.total_shards_per_node=2]`意思是对于索引indexName，它的分片在该节点数量超过了它的配置index.routing.allocation.total_shards_per_node=2。在stackoverflow在发现了遇见了同样问题的人，可能是因为版本有点差异，所以异常信息可能有点不一样[Too many shards on node for attribute: [rack], required per attribute: [1], node count: [2], leftover: [0]](https://stackoverflow.com/questions/44799045/too-many-shards-on-node-for-attribute-rack-required-per-attribute-1-node)
+
+看了一下这个应该就是集群的配置造成的，但是到elasticsearch.yml配置中确实没有找到该配置项，最后在无意中发现有人动态修改了集群的setting值，这个可以通过命令列出当前集群索引的配置：`curl http://localhost:9200/_settings?pretty`
+
+![](https://github.com/scalad/Elasticsearch/blob/master/doc/clusterLoadNotBalance/images/settings.png)
+
+我们发现服务器集群配置了total_shards_per_node这个属性,并且该值的值为2，也就验证了上面的错误，该配置没配置在elasticsearch.yml配置文件中，elasticsearch可以通过settings动态修改索引的分片和副本数等一些配置，我们发现集群中total_shards_per_node配置了每个节点上允许的最多分片是2，然而我们在移动分片的时候需要某个节点在一段时间内允许同时存在三个分片，因此，我们需要修改该配置，修改此配置不需要重新启动集群，风险较小。
+
+找到原因后，我们需要修改这个参数的值然后才能继续操作，修改这个值也很简单，直接一个curl命令就可以搞定：
+
+```shell
+curl -XPUT 'http://localhost:9200/esbbk_n6_0610/_settings' -d '{
+"index.routing.allocation.total_shards_per_node":3
+}'
+```
+修改完之后再查一次，这个值已经被修改为3，我们继续上面报错的步骤：
+
+```shell
+curl -XPOST 'http://localhost:9200/_cluster/reroute' -d '{
+  "commands":[{
+  "move":{
+    "index":"indexName",
+    "shard":0,
+    "from_node":"node-1",
+    "to_node":"node-4"
+}}]}'
+省略...
+```
+
+ok,移动完成后主副分片分布正常，用测试环境做压测，集群负载也均衡，没有发生主分片再移动现象，如下：
